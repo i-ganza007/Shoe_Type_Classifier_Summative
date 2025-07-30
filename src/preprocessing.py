@@ -7,7 +7,6 @@ import splitfolders
 from PIL import Image
 import io
 
-# --------- Dataset Preparation ---------
 
 def prepare_dataset_dataframe(base_path):
     data = []
@@ -69,7 +68,6 @@ def create_image_generators(train_dir, val_dir, test_dir, image_size=(128,128), 
     )
     return train_generator, val_generator, test_generator
 
-# --------- Preprocessing for Local Prediction (from file path) ---------
 
 def preprocess_image_for_prediction(img_path, target_size=(128, 128)):
     img = load_img(img_path, target_size=target_size)
@@ -79,7 +77,6 @@ def preprocess_image_for_prediction(img_path, target_size=(128, 128)):
     return x
 
 
-# --------- Preprocessing for API Uploads (from bytes) ---------
 
 def preprocess_image(img_bytes, target_size=(128, 128)):
     img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
@@ -89,20 +86,16 @@ def preprocess_image(img_bytes, target_size=(128, 128)):
     return img_array
 
 
-# --------- Main CLI Block ---------
 
 if __name__ == "__main__":
-    # Adjust paths to your project layout
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     base_dataset_path = os.path.join(project_root, "dataset")
     output_dataset_path = os.path.join(base_dataset_path, "split_data")
 
-    # Step 1: Prepare DataFrame (optional preview)
     df = prepare_dataset_dataframe(base_dataset_path)
     print("[INFO] Sample dataset entries:")
     print(df.sample(5))
 
-    # Step 2: Split dataset only if not already split
     split_dataset(base_dataset_path, output_dataset_path)
 
     print("[INFO] Preprocessing complete.")
