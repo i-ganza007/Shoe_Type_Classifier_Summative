@@ -37,7 +37,7 @@ idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
 joblib==1.5.1
-keras==3.11.0
+keras==3.11.1
 libclang==18.1.1
 locust==2.37.14
 locust-cloud==1.26.3
@@ -45,7 +45,7 @@ Markdown==3.8.2
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
-ml-dtypes==0.4.1
+ml_dtypes==0.5.3
 msgpack==1.1.1
 mypy_extensions==1.1.0
 namex==0.1.0
@@ -87,10 +87,9 @@ storage3==0.12.0
 StrEnum==0.4.15
 supabase==2.17.0
 supafunc==0.10.1
-tensorboard==2.17.1
+tensorboard==2.19.0
 tensorboard-data-server==0.7.2
-tensorflow==2.17.1
-tensorflow-intel==2.17.1
+tensorflow==2.19.0
 termcolor==3.1.0
 threadpoolctl==3.6.0
 typing-inspect==0.9.0
