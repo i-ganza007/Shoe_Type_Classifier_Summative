@@ -70,6 +70,7 @@ python-engineio==4.12.2
 python-multipart==0.0.20
 python-socketio==5.13.0
 pytz==2025.2
+pywin32==311
 pyzmq==27.0.0
 realtime==2.6.0
 requests==2.32.4
@@ -86,9 +87,9 @@ storage3==0.12.0
 StrEnum==0.4.15
 supabase==2.17.0
 supafunc==0.10.1
-tensorboard==2.19.0
+tensorboard==2.17.1
 tensorboard-data-server==0.7.2
-tensorflow==2.19.0
+tensorflow==2.17.1
 termcolor==3.1.0
 threadpoolctl==3.6.0
 typing-inspect==0.9.0
