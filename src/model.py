@@ -104,6 +104,31 @@ async def startup_event():
 def test_route():
     return {"message": "Testing and working"}
 
+@app.get("/metrics/")
+def get_system_metrics():
+    try:
+        response = supabase.table("System_Metrics").select("*").order("timestamp", desc=True).limit(20).execute()
+        return response.data
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+@app.get("/training-data/")
+def get_training_data():
+    try:
+        response = supabase.table("Training_Data").select("*").order("uploaded_at", desc=True).limit(50).execute()
+        return response.data
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+@app.get("/predictions/")
+def get_predictions():
+    try:
+        response = supabase.table("Predict").select("*").order("created_at", desc=True).limit(50).execute()
+        return response.data
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+
 
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
