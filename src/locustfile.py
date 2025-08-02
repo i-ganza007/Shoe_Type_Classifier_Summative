@@ -6,8 +6,8 @@ class ModelPredictUser(HttpUser):
 
     @task
     def send_prediction_request(self):
-        with open("gold.jpeg", "rb") as img_file:
-            files = {"file": ("gold.jpeg", img_file, "image/jpeg")}
+        with open("D111.jpeg", "rb") as img_file:
+            files = {"file": ("D111.jpeg", img_file, "image/jpeg")}
 
             with self.client.post("/predict", files=files, catch_response=True) as response:
                 if response.status_code == 200:

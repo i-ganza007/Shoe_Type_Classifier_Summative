@@ -2,6 +2,13 @@
 
 A cloud-deployed machine learning system for classifying shoe images (Boot, Sandal, Shoe). Includes UI for uploading images, retraining with new data via zip files, real-time prediction, and Supabase integration for database + file storage.
 
+## 🌐 **Live Demo & Links**
+
+🎥 **YouTube Demo**: [Watch the Video Demo](https://youtu.be/ahVeuyan_wo)  
+🚀 **Live API Backend**: [https://shoe-type-classifier-summative.onrender.com](https://shoe-type-classifier-summative.onrender.com)  
+🎨 **StreamLit Frontend**: [https://classingshoe.streamlit.app/](https://classingshoe.streamlit.app/)  
+📱 **Frontend Repository**: [StreamLit App GitHub](https://github.com/i-ganza007/StreamLit_App)
+
 ---
 
 ## 🔧 Features
@@ -81,11 +88,13 @@ your_zip_file.zip
 
 ## 🎥 Final Submission Checklist
 
-✅ Video Demo with:
+✅ **Video Demo**: [YouTube Demo Video](https://youtu.be/ahVeuyan_wo)
 
-* [ ] Camera on
-* [ ] Upload + Retrain workflow shown clearly
-* [ ] Prediction result demonstrated
+* [x] Camera on
+* [x] Upload + Retrain workflow shown clearly
+* [x] Prediction result demonstrated
+
+✅ **Live Deployment**: [Render API](https://shoe-type-classifier-summative.onrender.com) + [StreamLit Frontend](https://classingshoe.streamlit.app/)
 
 ✅ Code includes:
 
@@ -96,7 +105,8 @@ your_zip_file.zip
 
 ✅ Deployment:
 
-* [x] Web UI or Swagger/Postman testing interface
+* [x] Web UI ([StreamLit Frontend](https://classingshoe.streamlit.app/))
+* [x] Swagger/API testing interface ([API Docs](https://shoe-type-classifier-summative.onrender.com/docs))
 * [x] Supabase DB + Storage used correctly
 
 ---
@@ -104,21 +114,27 @@ your_zip_file.zip
 ## 🚀 Installation & Run Locally
 
 ```bash
-git clone <repo-url>
-cd project-root
+git clone https://github.com/i-ganza007/Shoe_Type_Classifier_Summative.git
+cd Shoe_Type_Classifier_Summative
 pip install -r requirements.txt
-uvicorn main:app --reload
+cd src
+uvicorn model:app --reload
 ```
+
+**Live API**: The app is already deployed at [https://shoe-type-classifier-summative.onrender.com](https://shoe-type-classifier-summative.onrender.com)
 
 ---
 
 ## 🥺 API Endpoints
 
-| Endpoint   | Method | Description                                  |
-| ---------- | ------ | -------------------------------------------- |
-| `/predict` | POST   | Upload an image for prediction               |
-| `/retrain` | POST   | Upload ZIP for model retraining              |
-| `/upload`  | POST   | Upload data to Supabase only (no retraining) |
+| Endpoint   | Method | Description                                  | Live URL |
+| ---------- | ------ | -------------------------------------------- | -------- |
+| `/predict` | POST   | Upload an image for prediction               | [Test Live](https://shoe-type-classifier-summative.onrender.com/predict) |
+| `/retrain` | POST   | Upload ZIP for model retraining              | [Test Live](https://shoe-type-classifier-summative.onrender.com/retrain) |
+| `/upload`  | POST   | Upload data to Supabase only (no retraining) | [Test Live](https://shoe-type-classifier-summative.onrender.com/upload) |
+| `/docs`    | GET    | Interactive API documentation                | [Swagger UI](https://shoe-type-classifier-summative.onrender.com/docs) |
+
+**Frontend Interface**: Use the [StreamLit App](https://classingshoe.streamlit.app/) for a user-friendly interface!
 
 ---
 
@@ -135,4 +151,10 @@ uvicorn main:app --reload
 ## 📧 Contact
 
 Project by **IAN GANZA**
-For issues, please raise them in the [GitHub Issues](https://github.com) section.
+
+🎥 **Demo Video**: [YouTube](https://youtu.be/ahVeuyan_wo)  
+🚀 **Live API**: [Render Deployment](https://shoe-type-classifier-summative.onrender.com)  
+🎨 **Frontend**: [StreamLit App](https://classingshoe.streamlit.app/)  
+📱 **Frontend Code**: [GitHub Repository](https://github.com/i-ganza007/StreamLit_App)  
+
+For issues, please raise them in the [GitHub Issues](https://github.com/i-ganza007/Shoe_Type_Classifier_Summative/issues) section.
