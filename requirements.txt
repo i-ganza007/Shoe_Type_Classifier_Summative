@@ -15,9 +15,9 @@ starlette>=0.47.0,<1.0.0
 # ==============================================================================
 # MACHINE LEARNING & AI
 # ==============================================================================
-# TensorFlow - CPU version for cloud deployment compatibility
-# Works both locally and on cloud platforms like Render
-tensorflow-cpu>=2.16.0,<2.18.0
+# TensorFlow - using stable version that works on Render
+# Note: Regular tensorflow works fine on CPU-only cloud platforms
+tensorflow==2.15.0
 numpy>=1.24.0,<2.0.0
 scikit-learn>=1.3.0,<1.8.0
 
@@ -62,11 +62,13 @@ python-dateutil>=2.8.0,<3.0.0
 # ==============================================================================
 # DEPLOYMENT NOTES:
 # ==============================================================================
-# This file uses tensorflow-cpu which works on:
+# This file uses tensorflow==2.15.0 which works reliably on:
 # ✓ Local development (Windows/Mac/Linux)
 # ✓ Cloud platforms (Render, Heroku, Railway, etc.)
 # ✓ Docker containers
 # ✓ GitHub Actions/CI
+#
+# TensorFlow 2.15.0 is stable and will automatically use CPU on cloud platforms
 #
 # Environment variables for deployment:
 # - SUPABASE_URL=your_supabase_url
