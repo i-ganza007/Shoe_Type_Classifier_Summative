@@ -3,6 +3,13 @@
 # ==============================================================================
 
 # ==============================================================================
+# BUILD TOOLS (Required for Render deployment)
+# ==============================================================================
+setuptools>=65.0.0
+wheel>=0.38.0
+pip>=22.0.0
+
+# ==============================================================================
 # WEB FRAMEWORK & API
 # ==============================================================================
 fastapi==0.116.1
@@ -15,12 +22,12 @@ starlette>=0.47.0,<1.0.0
 # ==============================================================================
 # MACHINE LEARNING & AI
 # ==============================================================================
-# TensorFlow - using the ONLY version available on Render
-# Render only has 2.20.0rc0 available (release candidate)
-tensorflow==2.20.0rc0
-# NumPy - compatible with both TensorFlow and Pandas
-numpy>=1.24.0,<1.26.0
-scikit-learn>=1.3.0,<1.8.0
+# TensorFlow - simplified approach for Render
+# Use any available TensorFlow version (Render will pick what works)
+tensorflow
+# NumPy - basic stable version
+numpy>=1.21.0,<1.25.0
+scikit-learn>=1.0.0,<1.4.0
 
 # ==============================================================================
 # IMAGE PROCESSING
@@ -31,8 +38,8 @@ split-folders==0.5.1
 # ==============================================================================
 # DATA PROCESSING
 # ==============================================================================
-# Pandas - using stable version to avoid Python 3.13 compilation issues
-pandas>=2.0.0,<2.2.0
+# Pandas - using very stable version to avoid compilation issues
+pandas>=1.5.0,<2.1.0
 
 # ==============================================================================
 # DATABASE & BACKEND SERVICES

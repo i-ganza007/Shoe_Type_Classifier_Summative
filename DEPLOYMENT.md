@@ -6,20 +6,25 @@
 
 ## For Render Deployment (Primary Option)
 
+**IMPORTANT: Render Python 3.13 Issues Fixed**
+
 1. **Repository**: Connect your GitHub repository
 2. **Build Command**: `pip install -r requirements.txt`
 3. **Start Command**: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
 4. **Environment Variables**: Add the variables listed below
-5. **Python Version**: Python 3.11.7 (specified in runtime.txt to avoid pandas compilation issues)
+5. **Python Version**: Python 3.11.9 (forced via runtime.txt and .python-version files)
+
+**If build fails, try minimal requirements:**
+- Change Build Command to: `pip install -r requirements-minimal.txt`
 
 ### Render Setup Steps:
 1. Go to https://render.com/
 2. Create new **Web Service**
 3. Connect your GitHub repository: `Shoe_Type_Classifier_Summative`
 4. Configure settings:
-   - **Build Command**: `pip install -r requirements.txt`
+   - **Build Command**: `pip install -r requirements.txt` (or try `pip install -r requirements-minimal.txt` if fails)
    - **Start Command**: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
-   - **Python Version**: Will use Python 3.11.7 (from runtime.txt file)
+   - **Python Version**: Will use Python 3.11.9 (from runtime.txt and .python-version files)
 5. Add environment variables (see below)
 6. Deploy!
 
