@@ -3,9 +3,8 @@ import shutil
 import time
 from datetime import datetime
 import traceback
-from fastapi import FastAPI, UploadFile, File, Request, HTTPException
+from fastapi import FastAPI, UploadFile, File, Request, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
-from fastapi_utils.tasks import repeat_every
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
@@ -18,12 +17,14 @@ from PIL import Image
 import numpy as np
 
 # TensorFlow imports for retrain
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow warnings
 import tensorflow as tf
-from keras.models import load_model, Sequential
-from keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten, Dense
-from keras.initializers import HeNormal
-from keras import regularizers
-from keras.utils import to_categorical
+from tensorflow.keras.models import load_model, Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten, Dense
+from tensorflow.keras.initializers import HeNormal
+from tensorflow.keras import regularizers
+from tensorflow.keras.utils import to_categorical
 from sklearn.preprocessing import LabelEncoder
 
 # ───────────────────────────────
@@ -42,8 +43,11 @@ BUCKET_NAME = "uploads"
 RETRAIN_FOLDER = "retraining_data"
 os.makedirs(RETRAIN_FOLDER, exist_ok=True)
 
-MODEL_PATH = "second_80_percent_model_ian_g_cnn_model.h5"
+# Use absolute path for model to avoid deployment issues
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "second_80_percent_model_ian_g_cnn_model.h5")
 
+
+import asyncio
 
 app = FastAPI()
 request_counter = 0        
@@ -61,33 +65,40 @@ async def metrics_middleware(request: Request, call_next):
     total_response_time += duration
     return response
 
-@app.on_event("startup")
-@repeat_every(seconds=60)
-async def log_system_metrics() -> None:
+# Background task for logging metrics
+async def log_metrics_periodically():
     global request_counter, total_response_time
-
-    if request_counter == 0:
-        return
-
-    avg_time = total_response_time / request_counter
-
-    # Insert system metrics with error handling
-    metrics_data = {
-        "timestamp": datetime.utcnow().isoformat(),
-        "request_count": int(request_counter),
-        "avg_response_time": float(avg_time),
-        "model_uptime_status": "active"
-    }
     
-    try:
-        metrics_response = supabase.table("System_Metrics").insert(metrics_data).execute()
-        if hasattr(metrics_response, 'error') and metrics_response.error:
-            print(f"Failed to log system metrics: {metrics_response.error}")
-    except Exception as e:
-        print(f"Error logging system metrics: {e}")
+    while True:
+        await asyncio.sleep(60)  # Log every 60 seconds
+        
+        if request_counter == 0:
+            continue
 
-    request_counter = 0
-    total_response_time = 0.0
+        avg_time = total_response_time / request_counter
+
+        # Insert system metrics with error handling
+        metrics_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "request_count": int(request_counter),
+            "avg_response_time": float(avg_time),
+            "model_uptime_status": "active"
+        }
+        
+        try:
+            metrics_response = supabase.table("System_Metrics").insert(metrics_data).execute()
+            if hasattr(metrics_response, 'error') and metrics_response.error:
+                print(f"Failed to log system metrics: {metrics_response.error}")
+        except Exception as e:
+            print(f"Error logging system metrics: {e}")
+
+        request_counter = 0
+        total_response_time = 0.0
+
+@app.on_event("startup")
+async def startup_event():
+    # Start the background metrics logging task
+    asyncio.create_task(log_metrics_periodically())
 
 @app.get("/testing_route")
 def test_route():
