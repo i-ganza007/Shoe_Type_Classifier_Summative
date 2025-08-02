@@ -19,11 +19,11 @@ import numpy as np
 
 # TensorFlow imports for retrain
 import tensorflow as tf
-from tensorflow.keras.models import load_model, Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten, Dense
-from tensorflow.keras.initializers import HeNormal
-from tensorflow.keras import regularizers
-from tensorflow.keras.utils import to_categorical
+from keras.models import load_model, Sequential
+from keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten, Dense
+from keras.initializers import HeNormal
+from keras import regularizers
+from keras.utils import to_categorical
 from sklearn.preprocessing import LabelEncoder
 
 # ───────────────────────────────
