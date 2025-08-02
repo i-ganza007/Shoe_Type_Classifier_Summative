@@ -10,7 +10,7 @@
 2. **Build Command**: `pip install -r requirements.txt`
 3. **Start Command**: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
 4. **Environment Variables**: Add the variables listed below
-5. **Python Version**: Python 3.11+ (auto-detected)
+5. **Python Version**: Python 3.11.7 (specified in runtime.txt to avoid pandas compilation issues)
 
 ### Render Setup Steps:
 1. Go to https://render.com/
@@ -19,6 +19,7 @@
 4. Configure settings:
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
+   - **Python Version**: Will use Python 3.11.7 (from runtime.txt file)
 5. Add environment variables (see below)
 6. Deploy!
 
