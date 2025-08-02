@@ -15,9 +15,9 @@ starlette>=0.47.0,<1.0.0
 # ==============================================================================
 # MACHINE LEARNING & AI
 # ==============================================================================
-# TensorFlow - using version available on Vercel
-# From available versions: 2.16.1, 2.16.2, 2.17.0, 2.17.1, 2.18.0, 2.18.1, 2.19.0
-tensorflow==2.17.1
+# TensorFlow - using the ONLY version available on Render
+# Render only has 2.20.0rc0 available (release candidate)
+tensorflow==2.20.0rc0
 numpy>=1.24.0,<2.0.0
 scikit-learn>=1.3.0,<1.8.0
 
@@ -62,14 +62,14 @@ python-dateutil>=2.8.0,<3.0.0
 # ==============================================================================
 # DEPLOYMENT NOTES:
 # ==============================================================================
-# This file works reliably on:
-# ✅ Vercel (Uses TensorFlow 2.17.1 - confirmed available)
-# ✅ Railway (Good TensorFlow support)
-# ✅ Fly.io (Docker-based)
-# ✅ Google Cloud Run (ML optimized)
-# ✅ Local development
+# ⚠️  RENDER SPECIFIC: Uses tensorflow==2.20.0rc0 (ONLY version available on Render)
+# ✅ This is a release candidate but it's what Render provides
+# ✅ Should work fine for inference/prediction tasks
+# ✅ Local development - you may need to install this specific version
 #
-# TensorFlow 2.17.1 is stable and available on most platforms
+# For other platforms, consider using different TensorFlow versions:
+# - Railway: tensorflow>=2.16.0 (more flexible)
+# - Vercel: tensorflow==2.17.1 (confirmed working)
 #
 # Environment variables for deployment:
 # - SUPABASE_URL=your_supabase_url

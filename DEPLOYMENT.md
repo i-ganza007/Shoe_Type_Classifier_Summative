@@ -1,23 +1,28 @@
-# Deployment Instructions for Cloud Platforms
+# Deployment Instructions - Render (Recommended)
 
 ## Requirements Files
 
-**`requirements.txt`** - Main requirements file that works for both local development and deployment
-**`requirements-cloud.txt`** - CPU-only version specifically for cloud deployment (if needed)
+**`requirements.txt`** - Main requirements file optimized for Render deployment
 
-## Deployment Options
+## For Render Deployment (Primary Option)
 
-### Option 1: Use Main Requirements (Recommended)
+1. **Repository**: Connect your GitHub repository
+2. **Build Command**: `pip install -r requirements.txt`
+3. **Start Command**: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
+4. **Environment Variables**: Add the variables listed below
+5. **Python Version**: Python 3.11+ (auto-detected)
 
-1. Use the main `requirements.txt` file - it has flexible TensorFlow versions
-2. Set the start command to: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
+### Render Setup Steps:
+1. Go to https://render.com/
+2. Create new **Web Service**
+3. Connect your GitHub repository: `Shoe_Type_Classifier_Summative`
+4. Configure settings:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
+5. Add environment variables (see below)
+6. Deploy!
 
-### Option 2: Use Cloud-Specific Requirements (If TensorFlow issues persist)
-
-1. Use `requirements-cloud.txt` which uses `tensorflow-cpu` for better cloud compatibility
-2. Set the start command to: `cd src && uvicorn model:app --host 0.0.0.0 --port $PORT`
-
-## Environment Variables to Set in Your Deployment Platform
+## Environment Variables to Set in Render Dashboard
 
 ```
 SUPABASE_URL=your_supabase_url
