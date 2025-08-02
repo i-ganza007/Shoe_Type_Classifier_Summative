@@ -26,6 +26,24 @@ TF_CPP_MIN_LOG_LEVEL=2
 PYTHONUNBUFFERED=1
 ```
 
+## For Vercel Deployment (Python Functions)
+
+1. **Root Directory**: `Shoe_Type_Classifier_Summative` (your main project folder)
+2. **Build Command**: `pip install -r requirements.txt`
+3. **Output Directory**: Leave empty (auto-detected)
+4. **Install Command**: `pip install -r requirements.txt`
+5. **Framework Preset**: Other
+6. **Configuration**: Uses `vercel.json` file (already created)
+7. **Environment Variables**: Add the variables listed above
+
+### Vercel Setup Steps:
+1. Go to https://vercel.com/
+2. Import your GitHub repository
+3. Set **Root Directory** to: `Shoe_Type_Classifier_Summative`
+4. Set **Build Command** to: `pip install -r requirements.txt`
+5. Add environment variables in Vercel dashboard
+6. Deploy!
+
 ## For Render Deployment
 
 1. **Repository**: Connect your GitHub repository

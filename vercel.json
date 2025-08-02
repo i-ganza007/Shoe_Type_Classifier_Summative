@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/model.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/model.py"
+    }
+  ],
+  "env": {
+    "TF_CPP_MIN_LOG_LEVEL": "2",
+    "PYTHONUNBUFFERED": "1"
+  }
+}
