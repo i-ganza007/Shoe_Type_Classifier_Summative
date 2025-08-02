@@ -71,12 +71,20 @@ async def log_system_metrics() -> None:
 
     avg_time = total_response_time / request_counter
 
-    supabase.table("System_Metrics").insert({
+    # Insert system metrics with error handling
+    metrics_data = {
         "timestamp": datetime.utcnow().isoformat(),
-        "request_count": request_counter,
-        "avg_response_time": avg_time,
+        "request_count": int(request_counter),
+        "avg_response_time": float(avg_time),
         "model_uptime_status": "active"
-    }).execute()
+    }
+    
+    try:
+        metrics_response = supabase.table("System_Metrics").insert(metrics_data).execute()
+        if hasattr(metrics_response, 'error') and metrics_response.error:
+            print(f"Failed to log system metrics: {metrics_response.error}")
+    except Exception as e:
+        print(f"Error logging system metrics: {e}")
 
     request_counter = 0
     total_response_time = 0.0
@@ -102,20 +110,32 @@ async def predict(file: UploadFile = File(...)):
         with open(file_path, "rb") as f:
             file_bytes = f.read()
 
-        supabase.storage.from_(BUCKET_NAME).upload(
+        # Upload to Supabase storage
+        upload_response = supabase.storage.from_(BUCKET_NAME).upload(
             path=f"uploads/{unique_filename}",
             file=file_bytes,
             file_options={"content-type": file.content_type},
         )
+        
+        # Check if upload was successful
+        if hasattr(upload_response, 'error') and upload_response.error:
+            raise Exception(f"Storage upload failed: {upload_response.error}")
 
         public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(f"uploads/{unique_filename}")
 
-        supabase.table("Predict").insert({
-            "image_path": public_url,
-            "predicted_class": result["predicted_class"],
-            "confidence_score": result["confidence"],
-            "response_time": response_time_ms,
-        }).execute()
+        # Insert prediction data into database
+        db_data = {
+            "image_path": str(public_url),
+            "predicted_class": str(result["predicted_class"]),
+            "confidence_score": float(result["confidence"]),
+            "response_time": int(response_time_ms),
+        }
+        
+        db_response = supabase.table("Predict").insert(db_data).execute()
+        
+        # Check if database insert was successful
+        if hasattr(db_response, 'error') and db_response.error:
+            raise Exception(f"Database insert failed: {db_response.error}")
 
         os.remove(file_path)
 
@@ -162,14 +182,20 @@ async def upload_zip(zip_file: UploadFile = File(...)):
                 continue
 
             new_rows.append({
-                "image_path": full_path,
-                "shoe_class": label_folder,
+                "image_path": str(full_path),
+                "shoe_class": str(label_folder),
                 "is_processed": False,
                 "uploaded_at": datetime.utcnow().isoformat()
             })
 
+    # Insert training data with error handling
     for row in new_rows:
-        supabase.table("Training_Data").insert(row).execute()
+        try:
+            insert_response = supabase.table("Training_Data").insert(row).execute()
+            if hasattr(insert_response, 'error') and insert_response.error:
+                print(f"Failed to insert training data: {insert_response.error}")
+        except Exception as e:
+            print(f"Error inserting training data: {e}")
 
     return {
         "message": f"{len(new_rows)} images extracted and saved.",
@@ -231,6 +257,10 @@ def load_images_and_labels(records):
 def retrain_model():
     try:
         response = supabase.table("Training_Data").select("*").eq("is_processed", False).execute()
+        
+        # Check if query was successful
+        if hasattr(response, 'error') and response.error:
+            return JSONResponse(status_code=500, content={"error": f"Database query failed: {response.error}"})
         records = response.data
 
         if not records:
@@ -258,10 +288,15 @@ def retrain_model():
         # Save updated model
         model.save(MODEL_PATH)
 
-        # Mark Training_Data as processed
+        # Mark Training_Data as processed with error handling
         ids_to_update = [item['id'] for item in records]
         for record_id in ids_to_update:
-            supabase.table("Training_Data").update({"is_processed": True}).eq("id", record_id).execute()
+            try:
+                update_response = supabase.table("Training_Data").update({"is_processed": True}).eq("id", record_id).execute()
+                if hasattr(update_response, 'error') and update_response.error:
+                    print(f"Failed to update record {record_id}: {update_response.error}")
+            except Exception as e:
+                print(f"Error updating record {record_id}: {e}")
 
         return {"message": f"Retrained on {len(X)} samples", "labels": list(np.unique(y))}
     

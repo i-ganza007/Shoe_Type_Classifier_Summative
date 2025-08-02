@@ -3,9 +3,8 @@ aiofiles==24.1.0
 altair==5.5.0
 annotated-types==0.7.0
 anyio==4.9.0
-astunparse==1.6.3tensorboard==2.15.0
-tensorboard-data-server==0.7.2
-tensorflow==2.15.0trs==25.3.0
+astunparse==1.6.3
+attrs==25.3.0
 bidict==0.23.1
 blinker==1.9.0
 Brotli==1.1.0
@@ -45,8 +44,8 @@ Jinja2==3.1.6
 joblib==1.5.1
 jsonschema==4.25.0
 jsonschema-specifications==2025.4.1
-tensorflow==2.15.0
-keras==2.15.0
+tensorflow==2.16.2
+keras==3.11.1
 libclang==18.1.1
 locust==2.37.14
 locust-cloud==1.26.3
@@ -103,10 +102,9 @@ StrEnum==0.4.15
 supabase==2.17.0
 supafunc==0.10.1
 tenacity==9.1.2
-tensorboard==2.18.0
+tensorboard==2.16.2
 tensorboard-data-server==0.7.2
-tensorflow==2.18.0
-tensorflow_intel==2.18.0
+tensorflow==2.16.2
 termcolor==3.1.0
 threadpoolctl==3.6.0
 toml==0.10.2
