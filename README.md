@@ -32,19 +32,29 @@ A cloud-deployed machine learning system for classifying shoe images (Boot, Sand
 ```
 project-root/
 │
-├── main.py                # FastAPI app entrypoint
-├── model/
-│   └── model.h5           # Current trained model (overwritten after retraining)
-├── training/
-│   ├── retrain.py         # Logic for model retraining
-│   └── preprocessing.py   # Image preprocessing functions
-├── utils/
-│   ├── supabase_client.py # Upload + DB utility functions
-│   └── helper.py          # Utility helpers
-├── temp_uploads/          # Temporary folder for uploaded images
-├── uploads/               # Folder for zip upload files
-├── README.md
-└── requirements.txt
+├── src/
+│   ├── model.py               # FastAPI app entrypoint
+│   ├── prediction.py          # Prediction logic
+│   ├── preprocessing.py       # Image preprocessing functions
+│   ├── locustfile.py          # Load testing configuration
+│   └── second_80_percent_model_ian_g_cnn_model.h5  # Trained model
+├── performance_testing/
+│   ├── Locust_2025-08-03-10h39_requests.csv       # Raw test data
+│   ├── total_requests_per_second.png              # RPS visualization
+│   ├── response_times.png                         # Response time charts
+│   └── number_of_users.png                        # User load progression
+├── models/
+│   └── ian_g_cnn_model.h5     # Model versions
+├── dataset/
+│   └── split_data/            # Training/validation/test data
+├── temp_uploads/              # Temporary folder for uploaded images
+├── requirements.txt           # Dependencies
+├── runtime.txt               # Python version for deployment
+├── .python-version          # Python version specification
+├── Procfile                 # Heroku deployment config
+├── vercel.json             # Vercel deployment config
+├── DEPLOYMENT.md           # Deployment instructions
+└── README.md               # This file
 ```
 
 ---
@@ -89,7 +99,16 @@ your_zip_file.zip
 ## 📊 **Performance Testing Results (Locust)**
 
 **Load Test Date**: August 3, 2025  
-**Target**: [https://shoe-type-classifier-summative.onrender.com/predict](https://shoe-type-classifier-summative.onrender.com/predict)
+**Target**: [https://shoe-type-classifier-summative.onrender.com/predict](https://shoe-type-classifier-summative.onrender.com/predict)  
+**Test Tool**: Locust Load Testing Framework
+
+### 📋 **Test Data & Visualizations**
+
+📊 **Raw Data**: [Locust CSV Results](./performance_testing/Locust_2025-08-03-10h39_locustfile.py_https___shoe-type-classifier-summative.onrender.com_requests.csv)  
+📈 **Performance Charts**: 
+- [Total Requests per Second](./performance_testing/total_requests_per_second.png)
+- [Response Times Distribution](./performance_testing/response_times.png)  
+- [Number of Users Over Time](./performance_testing/number_of_users.png)
 
 ### 📈 **Test Results Summary**
 
@@ -119,6 +138,22 @@ your_zip_file.zip
 - **95th percentile**: 51,000 ms
 
 *Note: Higher percentiles show some requests took longer due to cold starts and ML model processing time, which is normal for ML APIs on cloud platforms.*
+
+### 📊 **Visual Performance Analysis**
+
+The Locust testing generated comprehensive performance charts showing:
+
+1. **📈 Total Requests per Second**: Demonstrates the API's throughput capability, reaching peak performance of ~1.5 RPS
+2. **⏱️ Response Times Distribution**: Shows 50th vs 95th percentile response times, with most requests completing quickly
+3. **👥 User Load Progression**: Visualizes how the system handled gradual user ramp-up from 0 to 5 concurrent users
+
+### 🔬 **Test Configuration**
+
+- **Test Duration**: ~3 minutes
+- **User Simulation**: Gradual ramp-up to 5 concurrent users
+- **Request Pattern**: Continuous POST requests to `/predict` endpoint
+- **Image Upload**: Real shoe image (D111.jpeg) for authentic ML processing load
+- **Wait Time**: 1-2 seconds between requests per user (realistic usage pattern)
 
 ---
 
