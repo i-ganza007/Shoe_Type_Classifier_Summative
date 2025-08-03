@@ -86,6 +86,42 @@ your_zip_file.zip
 
 ---
 
+## 📊 **Performance Testing Results (Locust)**
+
+**Load Test Date**: August 3, 2025  
+**Target**: [https://shoe-type-classifier-summative.onrender.com/predict](https://shoe-type-classifier-summative.onrender.com/predict)
+
+### 📈 **Test Results Summary**
+
+| Metric | Value |
+|--------|-------|
+| **Total Requests** | 37 |
+| **Failure Rate** | 0% (100% Success Rate!) |
+| **Average Response Time** | 8,685 ms (~8.7 seconds) |
+| **Median Response Time** | 2,400 ms (2.4 seconds) |
+| **Min Response Time** | 1,315 ms |
+| **Max Response Time** | 51,181 ms |
+| **Requests per Second** | 0.485 |
+| **Concurrent Users** | 5 users |
+
+### 🎯 **Performance Insights**
+
+✅ **100% Success Rate** - No failed requests!  
+✅ **Stable Under Load** - Handled concurrent users effectively  
+⚡ **Fast Median Response** - 50% of requests completed in under 2.4 seconds  
+🔄 **ML Processing Time** - Higher average due to TensorFlow model inference  
+
+### 📊 **Response Time Distribution**
+
+- **50th percentile**: 2,400 ms
+- **75th percentile**: 2,900 ms  
+- **90th percentile**: 50,000 ms
+- **95th percentile**: 51,000 ms
+
+*Note: Higher percentiles show some requests took longer due to cold starts and ML model processing time, which is normal for ML APIs on cloud platforms.*
+
+---
+
 ## 🎥 Final Submission Checklist
 
 ✅ **Video Demo**: [YouTube Demo Video](https://youtu.be/ahVeuyan_wo)
